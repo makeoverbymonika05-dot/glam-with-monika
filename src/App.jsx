@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Instagram, Phone, MapPin, Star, Sparkles, ShoppingBag, Menu, X, Edit2, LogIn, Save, LogOut, Camera, Trash2, Plus } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { db } from './firebase'
+import { doc, getDoc, setDoc } from 'firebase/firestore'
 
 const DEFAULT_CONTENT = {
   header: {
@@ -75,31 +77,33 @@ function App() {
   const [submitStatus, setSubmitStatus] = useState(null) // { type: 'success' | 'error', message: string }
 
   useEffect(() => {
-    const savedContent = localStorage.getItem('monika_web_content')
-    if (savedContent) {
+    const fetchContent = async () => {
       try {
-        const parsed = JSON.parse(savedContent)
-        // Merge saved content with DEFAULT_CONTENT to ensure new keys are present
-        const merged = {
-          ...DEFAULT_CONTENT,
-          ...parsed,
-          header: { ...DEFAULT_CONTENT.header, ...parsed.header },
-          hero: { ...DEFAULT_CONTENT.hero, ...parsed.hero },
-          about: { ...DEFAULT_CONTENT.about, ...parsed.about },
-          contact: { ...DEFAULT_CONTENT.contact, ...parsed.contact },
-          hamper: { ...DEFAULT_CONTENT.hamper, ...parsed.hamper },
-          gallery: parsed.gallery || DEFAULT_CONTENT.gallery,
-          hero: { ...DEFAULT_CONTENT.hero, ...parsed.hero },
-          testimonials: parsed.testimonials || DEFAULT_CONTENT.testimonials,
-          socials: { ...DEFAULT_CONTENT.socials, ...parsed.socials }
+        const docRef = doc(db, 'content', 'main_website')
+        const docSnap = await getDoc(docRef)
+        if (docSnap.exists()) {
+          const parsed = docSnap.data()
+          // Merge saved content with DEFAULT_CONTENT to ensure new keys are present
+          const merged = {
+            ...DEFAULT_CONTENT,
+            ...parsed,
+            header: { ...DEFAULT_CONTENT.header, ...parsed.header },
+            hero: { ...DEFAULT_CONTENT.hero, ...parsed.hero },
+            about: { ...DEFAULT_CONTENT.about, ...parsed.about },
+            contact: { ...DEFAULT_CONTENT.contact, ...parsed.contact },
+            hamper: { ...DEFAULT_CONTENT.hamper, ...parsed.hamper },
+            gallery: parsed.gallery || DEFAULT_CONTENT.gallery,
+            testimonials: parsed.testimonials || DEFAULT_CONTENT.testimonials,
+            socials: { ...DEFAULT_CONTENT.socials, ...parsed.socials }
+          }
+          setContent(merged)
+          setTempContent(merged)
         }
-        setContent(merged)
-        setTempContent(merged)
-      } catch (e) {
-        console.error('Failed to parse saved content', e)
-        localStorage.removeItem('monika_web_content')
+      } catch (error) {
+        console.error("Error fetching content from Firestore:", error)
       }
     }
+    fetchContent()
   }, [])
 
   const handleLogin = (e) => {
@@ -114,11 +118,17 @@ function App() {
     }
   }
 
-  const handleSave = () => {
-    setContent(tempContent)
-    localStorage.setItem('monika_web_content', JSON.stringify(tempContent))
-    setIsLoggedIn(false)
-    alert('Changes saved successfully!')
+  const handleSave = async () => {
+    try {
+      const docRef = doc(db, 'content', 'main_website')
+      await setDoc(docRef, tempContent)
+      setContent(tempContent)
+      setIsLoggedIn(false)
+      alert('Changes saved successfully! Everyone can now see them live.')
+    } catch (error) {
+      console.error("Error saving to Firestore:", error)
+      alert("Failed to save changes to the live database.")
+    }
   }
 
   const getDirectImageUrl = (url) => {
