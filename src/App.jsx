@@ -58,15 +58,23 @@ const DEFAULT_CONTENT = {
   }
 }
 
+const getInitialContent = () => {
+  const saved = localStorage.getItem('glam_live_content')
+  if (saved) {
+    try { return JSON.parse(saved) } catch(e){}
+  }
+  return DEFAULT_CONTENT
+}
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [showLogin, setShowLogin] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(true)
-  const [content, setContent] = useState(DEFAULT_CONTENT)
-  const [tempContent, setTempContent] = useState(DEFAULT_CONTENT)
+  const [isLoading, setIsLoading] = useState(false) // Removed initial true
+  const [content, setContent] = useState(getInitialContent)
+  const [tempContent, setTempContent] = useState(getInitialContent)
   const [adminTab, setAdminTab] = useState('content') // 'content' or 'media'
   const [bookingForm, setBookingForm] = useState({
     name: '',
@@ -104,6 +112,7 @@ function App() {
           }
           setContent(merged)
           setTempContent(merged)
+          localStorage.setItem('glam_live_content', JSON.stringify(merged))
         }
       } catch (error) {
         console.error("Error fetching content from Firestore:", error)
@@ -320,17 +329,6 @@ function App() {
   const handleFeedbackChange = (e) => {
     const { name, value } = e.target
     setFeedbackForm(prev => ({ ...prev, [name]: value }))
-  }
-
-  if (isLoading) {
-    return (
-      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#050505', color: '#fff' }}>
-        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: 'linear' }} style={{ marginBottom: '20px' }}>
-          <Star size={40} color="var(--color-primary)" />
-        </motion.div>
-        <h2 style={{ letterSpacing: '2px', fontWeight: 600 }}>Loading Glamour...</h2>
-      </div>
-    )
   }
 
   return (
