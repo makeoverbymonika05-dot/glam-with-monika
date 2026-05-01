@@ -121,14 +121,14 @@ function App() {
           
           // Force apply the requested image, bypassing any bad database states
           if (parsed.hero) {
-            parsed.hero.image = 'https://lh3.googleusercontent.com/d/1vt1Bsic0U8WNHk1h9YpZ-vK9fg3ARTMs'
+            parsed.hero.image = '/hero_opt.jpg'
           }
           // Merge saved content with DEFAULT_CONTENT to ensure new keys are present
           const merged = {
             ...DEFAULT_CONTENT,
             ...parsed,
             header: { ...DEFAULT_CONTENT.header, ...parsed.header },
-            hero: { ...DEFAULT_CONTENT.hero, ...parsed.hero },
+            hero: { ...DEFAULT_CONTENT.hero, ...parsed.hero, image: '/hero_opt.jpg' },
             about: { ...DEFAULT_CONTENT.about, ...parsed.about },
             contact: { ...DEFAULT_CONTENT.contact, ...parsed.contact },
             hamper: { ...DEFAULT_CONTENT.hamper, ...parsed.hamper },
