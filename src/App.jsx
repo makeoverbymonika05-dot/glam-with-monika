@@ -1002,19 +1002,19 @@ function App() {
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
                 <div>
                   <h4 style={{ marginBottom: '10px' }}>Beauty Essentials</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
-                    <li>• Hydrating lip oil</li>
-                    <li>• Pocket perfume roller</li>
-                    <li>• Under-eye cooling patches</li>
+                  <ul style={{ listStyle: 'none', fontSize: '0.95rem', color: 'var(--color-text-muted)' }}>
+                    <li style={{ marginBottom: '8px' }}>💄 Hydrating lip oil</li>
+                    <li style={{ marginBottom: '8px' }}>🌸 Pocket perfume roller</li>
+                    <li style={{ marginBottom: '8px' }}>✨ Under-eye cooling patches</li>
                   </ul>
                 </div>
                 <div>
                   <h4 style={{ marginBottom: '10px' }}>Skin & Comfort</h4>
-                  <ul style={{ listStyle: 'none', fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>
-                    <li>• Blotting paper & Powder puff</li>
-                    <li>• Silk scrunchie & hair pin</li>
-                    <li>• Luxury chocolate</li>
-                    <li>• Personalized note</li>
+                  <ul style={{ listStyle: 'none', fontSize: '0.95rem', color: 'var(--color-text-muted)' }}>
+                    <li style={{ marginBottom: '8px' }}>🧽 Blotting paper & Powder puff</li>
+                    <li style={{ marginBottom: '8px' }}>🎀 Silk scrunchie & hair pin</li>
+                    <li style={{ marginBottom: '8px' }}>🍫 Luxury chocolate</li>
+                    <li style={{ marginBottom: '8px' }}>💌 Personalized note</li>
                   </ul>
                 </div>
               </div>
