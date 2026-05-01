@@ -61,7 +61,23 @@ const DEFAULT_CONTENT = {
 const getInitialContent = () => {
   const saved = localStorage.getItem('glam_live_content')
   if (saved) {
-    try { return JSON.parse(saved) } catch(e){}
+    try { 
+      const parsed = JSON.parse(saved) 
+      if (parsed) {
+        return {
+          ...DEFAULT_CONTENT,
+          ...parsed,
+          header: { ...DEFAULT_CONTENT.header, ...(parsed.header || {}) },
+          hero: { ...DEFAULT_CONTENT.hero, ...(parsed.hero || {}) },
+          about: { ...DEFAULT_CONTENT.about, ...(parsed.about || {}) },
+          contact: { ...DEFAULT_CONTENT.contact, ...(parsed.contact || {}) },
+          hamper: { ...DEFAULT_CONTENT.hamper, ...(parsed.hamper || {}) },
+          gallery: parsed.gallery || DEFAULT_CONTENT.gallery,
+          testimonials: parsed.testimonials || DEFAULT_CONTENT.testimonials,
+          socials: { ...DEFAULT_CONTENT.socials, ...(parsed.socials || {}) }
+        }
+      }
+    } catch(e){}
   }
   return DEFAULT_CONTENT
 }
