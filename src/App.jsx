@@ -12,7 +12,7 @@ const DEFAULT_CONTENT = {
     tagline: 'Natural Beauty',
     description: 'Professional Makeup Artist & Hairstylist with 5+ years of experience. Specializing in soft, natural, and elegant bridal glam.',
     price: '₹3,999',
-    image: '/hero.png',
+    image: 'https://lh3.googleusercontent.com/d/1vt1Bsic0U8WNHk1h9YpZ-vK9fg3ARTMs',
     pdfUrl: '#'
   },
   about: {
