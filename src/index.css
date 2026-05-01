@@ -45,11 +45,18 @@ h1, h2, h3, h4 {
 }
 
 .text-3d {
+  font-family: var(--font-serif);
+  color: #ffffff;
   text-shadow: 
-    1px 1px 0px #444,
-    2px 2px 0px #333,
-    3px 3px 0px #222,
-    4px 4px 6px rgba(0,0,0,0.8);
+    1px 1px 0px #d4af37,
+    2px 2px 0px #ab8d2a,
+    3px 3px 0px #856d1f,
+    4px 4px 0px #614f14,
+    5px 5px 0px #40340a,
+    6px 6px 15px rgba(212, 175, 55, 0.4),
+    8px 8px 15px rgba(0,0,0,0.9);
+  font-weight: 800;
+  letter-spacing: 4px;
 }
 
 section {
