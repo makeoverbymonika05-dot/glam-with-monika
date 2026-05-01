@@ -115,20 +115,14 @@ function App() {
       try {
         const docRef = doc(db, 'content', 'main_website')
 
-        // ONE-TIME HOTFIX RUNNER for Firebase Database
-        if (!localStorage.getItem('db_patched_v2')) {
-          await setDoc(docRef, { 
-            hero: { 
-              tagline: 'Natural Beauty', 
-              image: 'https://lh3.googleusercontent.com/d/1vt1Bsic0U8WNHk1h9YpZ-vK9fg3ARTMs' 
-            } 
-          }, { merge: true })
-          localStorage.setItem('db_patched_v2', 'true')
-        }
-
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           const parsed = docSnap.data()
+          
+          // Force apply the requested image, bypassing any bad database states
+          if (parsed.hero) {
+            parsed.hero.image = 'https://lh3.googleusercontent.com/d/1vt1Bsic0U8WNHk1h9YpZ-vK9fg3ARTMs'
+          }
           // Merge saved content with DEFAULT_CONTENT to ensure new keys are present
           const merged = {
             ...DEFAULT_CONTENT,
