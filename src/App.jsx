@@ -1251,8 +1251,6 @@ function App() {
                 <img src={content.header.logo} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
               <span className="text-3d" style={{ fontWeight: 600 }}>GLAM BY MONIKA</span>
-            </div>
-            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>© 2004. All rights reserved. Available for Destination Bookings.</p>
             <div style={{ display: 'flex', gap: '20px' }}>
                <a href={content.socials.instagram} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}><Instagram size={20} /></a>
                <a href={content.socials.whatsapp} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}><Phone size={20} /></a>
