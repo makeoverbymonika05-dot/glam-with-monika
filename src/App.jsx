@@ -9,7 +9,7 @@ const DEFAULT_CONTENT = {
     logo: '/logo.png'
   },
   hero: {
-    tagline: 'Elevating Your Natural Beauty',
+    tagline: 'Natural Beauty',
     description: 'Professional Makeup Artist & Hairstylist with 5+ years of experience. Specializing in soft, natural, and elegant bridal glam.',
     price: '₹3,999',
     image: '/hero.png',
@@ -84,6 +84,8 @@ function App() {
     const fetchContent = async () => {
       try {
         const docRef = doc(db, 'content', 'main_website')
+
+        // Fetch document normally now
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           const parsed = docSnap.data()
