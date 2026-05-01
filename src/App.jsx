@@ -659,7 +659,7 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               className="script-text"
               style={{ marginBottom: '10px' }}
-            >Hi gorgeous, welcome to Makeover by monika</motion.p>
+            >Hi gorgeous, welcome to Makeover by Monika</motion.p>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
