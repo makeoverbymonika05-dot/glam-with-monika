@@ -111,16 +111,25 @@ section {
     height: auto !important;
     padding-top: 120px !important;
     padding-bottom: 60px !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
   #hero > div:first-child {
     max-width: 100% !important;
     z-index: 2;
     position: relative;
+    order: 1; /* Text first */
   }
   #hero > div:last-child {
+    position: relative !important;
     width: 100% !important;
-    opacity: 0.25; /* Send image to background */
-    pointer-events: none;
+    height: 450px !important;
+    opacity: 1 !important; /* Re-enabled fully opaque image! */
+    margin-top: 40px !important;
+    border-radius: 20px !important;
+    pointer-events: auto !important;
+    order: 2; /* Image below text securely */
+    transform: none !important; /* Clear any positioning translations */
   }
 
   /* Nav adjustments */
