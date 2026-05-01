@@ -636,7 +636,7 @@ function App() {
                  style={{ background: 'rgba(0,0,0,0.5)', color: '#fff', border: '1px dashed var(--color-primary)', padding: '5px', borderRadius: '4px', fontSize: '0.7rem', width: '140px' }}
                />
             )}
-            <span style={{ fontSize: '1.4rem', fontWeight: 600, letterSpacing: '2px' }}>GLAM WITH MONIKA</span>
+            <span className="text-3d" style={{ fontSize: '1.4rem', fontWeight: 600, letterSpacing: '2px' }}>GLAM BY MONIKA</span>
           </div>
 
           {/* Desktop Nav */}
@@ -1250,7 +1250,7 @@ function App() {
               }}>
                 <img src={content.header.logo} alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
               </div>
-              <span style={{ fontWeight: 600 }}>GLAM WITH MONIKA</span>
+              <span className="text-3d" style={{ fontWeight: 600 }}>GLAM BY MONIKA</span>
             </div>
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.9rem' }}>© 2004. All rights reserved. Available for Destination Bookings.</p>
             <div style={{ display: 'flex', gap: '20px' }}>

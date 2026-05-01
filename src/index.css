@@ -44,6 +44,14 @@ h1, h2, h3, h4 {
   font-size: 1.5rem;
 }
 
+.text-3d {
+  text-shadow: 
+    1px 1px 0px #444,
+    2px 2px 0px #333,
+    3px 3px 0px #222,
+    4px 4px 6px rgba(0,0,0,0.8);
+}
+
 section {
   padding: 80px 20px;
   max-width: 1200px;
