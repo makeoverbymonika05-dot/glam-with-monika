@@ -81,3 +81,90 @@ section {
   font-weight: 700;
   font-size: 1.25rem;
 }
+
+/* Mobile Responsiveness */
+@media screen and (max-width: 768px) {
+  section {
+    padding: 60px 5% !important;
+  }
+
+  /* Force vertical stacking on flex containers */
+  #about {
+    flex-direction: column !important;
+    gap: 30px !important;
+  }
+  #hamper > div {
+    flex-direction: column-reverse !important;
+    gap: 30px !important;
+  }
+  #hamper > div > div:last-child {
+    width: 100%;
+  }
+
+  /* Typography scaling */
+  h1 { font-size: 2.8rem !important; }
+  h2 { font-size: 2.2rem !important; }
+  h3 { font-size: 1.6rem !important; }
+
+  /* Hero adjustments */
+  #hero {
+    height: auto !important;
+    padding-top: 120px !important;
+    padding-bottom: 60px !important;
+  }
+  #hero > div:first-child {
+    max-width: 100% !important;
+    z-index: 2;
+    position: relative;
+  }
+  #hero > div:last-child {
+    width: 100% !important;
+    opacity: 0.25; /* Send image to background */
+    pointer-events: none;
+  }
+
+  /* Nav adjustments */
+  header nav {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+  .desktop-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px !important;
+    font-size: 0.9rem;
+  }
+
+  /* Grids and Flex wraps */
+  #contact > div > div:first-of-type {
+    flex-direction: column !important;
+    gap: 10px !important;
+    align-items: flex-start !important;
+    text-align: left;
+  }
+  #contact > div > div:nth-of-type(2) {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+  }
+
+  /* Fix Form to be single column */
+  form.glass-card {
+    grid-template-columns: 1fr !important;
+  }
+  form.glass-card > div, form.glass-card > button {
+    grid-column: span 1 !important;
+  }
+
+  /* Statistics in About section */
+  #about .glass-card > div:nth-of-type(1) {
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  
+  /* Footer */
+  footer > div {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 20px !important;
+  }
+}
