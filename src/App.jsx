@@ -64,6 +64,7 @@ function App() {
   const [showLogin, setShowLogin] = useState(false)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
   const [content, setContent] = useState(DEFAULT_CONTENT)
   const [tempContent, setTempContent] = useState(DEFAULT_CONTENT)
   const [adminTab, setAdminTab] = useState('content') // 'content' or 'media'
@@ -75,6 +76,9 @@ function App() {
   })
   const [isSending, setIsSending] = useState(false)
   const [submitStatus, setSubmitStatus] = useState(null) // { type: 'success' | 'error', message: string }
+  const [feedbackForm, setFeedbackForm] = useState({ name: '', rating: 5, message: '' })
+  const [isSendingFeedback, setIsSendingFeedback] = useState(false)
+  const [feedbackStatus, setFeedbackStatus] = useState(null)
 
   useEffect(() => {
     const fetchContent = async () => {
@@ -101,6 +105,8 @@ function App() {
         }
       } catch (error) {
         console.error("Error fetching content from Firestore:", error)
+      } finally {
+        setIsLoading(false)
       }
     }
     fetchContent()
@@ -271,6 +277,58 @@ function App() {
   const handleSelectPackage = (serviceName) => {
     setBookingForm(prev => ({ ...prev, service: serviceName }))
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+  }
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault()
+    const { name, rating, message } = feedbackForm
+
+    setIsSendingFeedback(true)
+    setFeedbackStatus(null)
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/2347e07b00253a22062fe37362bb2ee6`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          Name: name,
+          Rating: rating + ' Stars',
+          Message: message,
+          _subject: `New Customer Feedback from ${name}`
+        })
+      })
+
+      const result = await response.json()
+      if (result.success) {
+        setFeedbackStatus({ type: 'success', message: 'Thank you for your feedback! Your message has been sent directly to Monika.' })
+        setFeedbackForm({ name: '', rating: 5, message: '' })
+      } else {
+        setFeedbackStatus({ type: 'error', message: 'Something went wrong. Please try again.' })
+      }
+    } catch (error) {
+      setFeedbackStatus({ type: 'error', message: 'Failed to send message. Please check your internet connection.' })
+    } finally {
+      setIsSendingFeedback(false)
+    }
+  }
+
+  const handleFeedbackChange = (e) => {
+    const { name, value } = e.target
+    setFeedbackForm(prev => ({ ...prev, [name]: value }))
+  }
+
+  if (isLoading) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '100vh', background: '#050505', color: '#fff' }}>
+        <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 2, ease: 'linear' }} style={{ marginBottom: '20px' }}>
+          <Star size={40} color="var(--color-primary)" />
+        </motion.div>
+        <h2 style={{ letterSpacing: '2px', fontWeight: 600 }}>Loading Glamour...</h2>
+      </div>
+    )
   }
 
   return (
@@ -589,7 +647,7 @@ function App() {
                   style={{ background: 'none', border: '1px dashed var(--color-primary)', color: 'inherit', width: '100%', fontSize: 'inherit', fontFamily: 'inherit' }}
                 />
               ) : (
-                <>Elevating Your <span style={{ color: 'var(--color-primary)' }}>{content.hero.tagline}</span></>
+                <><span style={{ color: 'var(--color-primary)' }}>{content.hero.tagline}</span></>
               )}
             </motion.h1>
             <motion.p 
@@ -736,6 +794,60 @@ function App() {
                        <p style={{ fontSize: '0.8rem', fontWeight: 600 }}>— {rev.name}</p>
                     </div>
                   ))}
+                </div>
+
+                {/* Optional User Feedback Submission Form */}
+                <div style={{ marginTop: '30px', padding: '20px', background: 'rgba(255,255,255,0.03)', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <h4 style={{ fontSize: '1.2rem', marginBottom: '15px' }}>Share Your Experience</h4>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginBottom: '15px' }}>Your review will be sent directly to Monika.</p>
+                  <form onSubmit={handleFeedbackSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                    <input
+                      type="text"
+                      name="name"
+                      value={feedbackForm.name}
+                      onChange={handleFeedbackChange}
+                      required
+                      placeholder="Your Name"
+                      style={{ padding: '10px', background: '#111', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                    />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <label style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)' }}>Rating:</label>
+                      <select
+                        name="rating"
+                        value={feedbackForm.rating}
+                        onChange={handleFeedbackChange}
+                        style={{ padding: '8px', background: '#111', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                      >
+                        <option value="5">⭐⭐⭐⭐⭐ (5 Stars)</option>
+                        <option value="4">⭐⭐⭐⭐ (4 Stars)</option>
+                        <option value="3">⭐⭐⭐ (3 Stars)</option>
+                        <option value="2">⭐⭐ (2 Stars)</option>
+                        <option value="1">⭐ (1 Star)</option>
+                      </select>
+                    </div>
+                    <textarea
+                      name="message"
+                      value={feedbackForm.message}
+                      onChange={handleFeedbackChange}
+                      required
+                      placeholder="Write your review here..."
+                      rows="3"
+                      style={{ padding: '10px', background: '#111', border: '1px solid #333', color: '#fff', borderRadius: '4px' }}
+                    />
+                    <button 
+                      type="submit" 
+                      disabled={isSendingFeedback}
+                      className="btn-primary" 
+                      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', opacity: isSendingFeedback ? 0.7 : 1, cursor: isSendingFeedback ? 'not-allowed' : 'pointer' }}
+                    >
+                      {isSendingFeedback ? 'Sending...' : 'Send Review'}
+                    </button>
+                    {feedbackStatus && (
+                      <p style={{ fontSize: '0.85rem', color: feedbackStatus.type === 'success' ? '#4caf50' : '#f44336', textAlign: 'center' }}>
+                        {feedbackStatus.message}
+                      </p>
+                    )}
+                  </form>
                 </div>
               </div>
             </motion.div>
