@@ -665,7 +665,7 @@ function App() {
               whileInView={{ opacity: 1, y: 0 }}
               className="script-text"
               style={{ marginBottom: '10px' }}
-            >Hi, I'm Monika ✨</motion.p>
+            >Hi gorgeous, welcome to Makeover by monika</motion.p>
             <motion.h1 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -1002,8 +1002,7 @@ function App() {
         <section id="hamper" style={{ padding: '100px 5%' }}>
           <div className="glass-card" style={{ display: 'flex', gap: '50px', alignItems: 'center', background: 'linear-gradient(135deg, #1a1a1a 0%, #111 100%)' }}>
             <div style={{ flex: 1 }}>
-              <span className="script-text">Special Gift</span>
-              <h2 style={{ fontSize: '3rem', marginBottom: '20px' }}>Luxury <span style={{ color: 'var(--color-primary)' }}>Bridal Hamper</span></h2>
+              <h2 style={{ fontSize: '3rem', marginBottom: '20px' }}>FREE <span style={{ color: 'var(--color-primary)' }}>BRIDAL HAMPER</span></h2>
               <p style={{ marginBottom: '30px', color: 'var(--color-text-muted)' }}>A little something to make your bridal glow even more special ❤️</p>
               
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
@@ -1013,7 +1012,6 @@ function App() {
                     <li>• Hydrating lip oil</li>
                     <li>• Pocket perfume roller</li>
                     <li>• Under-eye cooling patches</li>
-                    <li>• Clear brow / lash gel mini</li>
                   </ul>
                 </div>
                 <div>
