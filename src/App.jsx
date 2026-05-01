@@ -59,6 +59,12 @@ const DEFAULT_CONTENT = {
 }
 
 const getInitialContent = () => {
+  // Purge the old broken cache once to prevent old strings or images from rendering
+  if (!localStorage.getItem('cache_cleared_v2')) {
+    localStorage.removeItem('glam_live_content')
+    localStorage.setItem('cache_cleared_v2', 'true')
+  }
+
   const saved = localStorage.getItem('glam_live_content')
   if (saved) {
     try { 
@@ -109,7 +115,17 @@ function App() {
       try {
         const docRef = doc(db, 'content', 'main_website')
 
-        // Fetch document normally now
+        // ONE-TIME HOTFIX RUNNER for Firebase Database
+        if (!localStorage.getItem('db_patched_v2')) {
+          await setDoc(docRef, { 
+            hero: { 
+              tagline: 'Natural Beauty', 
+              image: 'https://lh3.googleusercontent.com/d/1vt1Bsic0U8WNHk1h9YpZ-vK9fg3ARTMs' 
+            } 
+          }, { merge: true })
+          localStorage.setItem('db_patched_v2', 'true')
+        }
+
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           const parsed = docSnap.data()
